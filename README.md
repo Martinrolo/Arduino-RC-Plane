@@ -53,3 +53,33 @@ Follow the final result image below to build the transmitter, along with the ste
 - Make 4 holes on each side of the perfboard, where you will screw in the 2 joysticks. But don't screw them in just yet.
 
 Our components are now set. Now, it's time to connect all of them.
+
+### First, we need to connect the nRF24l01 module to the Arduino Nano. 7 connections need to be made:
+- GND to GND
+- VCC to 3.3V
+- CE to D9
+- CSN to D10
+- SCK to D13
+- MOSI to D11
+- MISO to D12
+
+### Then, we connect our 2 joysticks to the Arduino Nano. 4 connections need to be made for each:
+- GND to GND
+- 5V to 5V
+- VRX to A0 (right joystick), VRX to A2 (left joystick)
+- VRY to A1 (right joystick), VRY to A3 (left joystick)
+
+### Finally, we can connect a 9V battery clip connector. To improve user experience, we can add an ON/OFF switch.
+- Connect the red wire of the battery clip connector to a wire of the ON/OFF switch
+- Connect the other wire of the ON/OFF switch to the VIN pin of the Arduino Nano
+- Connect the black wire of the battery clip connector to the GND pin of the Arduino Nano
+
+And we're done! Since there is no receiver to connect to, we'll leave the coding part for later. We will build the receiver first
+
+## 2: Build the receiver
+
+## 3: Code the transmitter
+
+## 4: Code the receiver
+
+## 5: Build the airplane
