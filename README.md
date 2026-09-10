@@ -139,7 +139,7 @@ You can upload it right away to your transmitter's Arduino Nano in 2 ways: Ardui
 - Click on ***Open Project*** and open the extracted file of the project (in the folder where the ***platformio.ini*** file is located).
 - On the terminal type the following command: ```pio device list```
   -  Make sure your transmitter is connected to your laptop. This command will return you which port corresponds to your Arduino Nano.
-  -  Copy the result of this command in the ```upload_port``` field (line 20) of the ```[env.transmitter]``` section. 
+  -  Copy the result of this command in the ```upload_port``` field (line 10) of the ```[env.transmitter]``` section. 
 - Click on the *->* icon in the lower part of the VS Code window to upload the code.
 
 ## 4: 📡💻 Code the receiver
@@ -152,7 +152,7 @@ The steps for uploading the receiver code are the same as for the transmitter, e
 - You simply select another board as ***Arduino Nano***, which will be on a different port.
 
 ### Uploading code through VSCode 
-- In the [***platformio.ini*** file](https://github.com/Martinrolo/Arduino-RC-Plane/blob/main/platformio.ini), change the ```upload_port``` field (line 20) for the result of the ```pio device list``` command. 
+- In the [***platformio.ini*** file](https://github.com/Martinrolo/Arduino-RC-Plane/blob/main/platformio.ini), change the ```upload_port``` field (line 21) for the result of the ```pio device list``` command. 
 
 The rest of the procedures are the same.
 
