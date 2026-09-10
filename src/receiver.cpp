@@ -41,7 +41,7 @@ void setup() {
     radio.begin(); 
     radio.setAutoAck(false); 
     radio.setDataRate(RF24_250KBPS);
-    radio.setPALevel(RF24_PA_HIGH); //REMETTRE HIGH
+    radio.setPALevel(RF24_PA_HIGH);
     radio.setPayloadSize(sizeof(myPayload)); 
     radio.openReadingPipe(0, address); 
     radio.startListening(); 
@@ -69,8 +69,7 @@ void receiveData()
         radio.read(&tempPayload, sizeof(tempPayload)); 
 
         //check if aileron data makes sense
-        //TODO: ADD OTHER TESTS
-        if (tempPayload.aileron >= 50 && tempPayload.aileron <= 130) {
+        if (tempPayload.aileron >= 70 && tempPayload.aileron <= 110) {
             myPayload = tempPayload;
             lastTransmissionTime = millis();
 
