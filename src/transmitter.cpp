@@ -1,18 +1,13 @@
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
+#include <controlsData.h> 
 
 RF24 radio(9,10);
 
 const byte address[6] = "00001";
 
-struct payload { 
-	 byte aileron;
-     byte elevator;
-     byte thrust;
-}; 
-
-payload myPayload; 
+struct controlsData payload; 
 
 //Thrust data
 int thrustJoyPinY = A0;                
@@ -42,25 +37,28 @@ void loop() {
     joystickThrust = analogRead(thrustJoyPinY);  
     joystickThrust = constrain(joystickThrust, 550, 1023); 
     thrust = map(joystickThrust, 550, 1023, 0, 180);
-    myPayload.thrust = thrust;
+    payload.thrust = thrust;
 
     //Get controls data from left joystick
     controlsY = analogRead(controlsJoyPinY);  
-    controlsY = map(controlsY, 0, 1023, 110, 70);
-    myPayload.elevator = controlsY;
+    controlsY = map(controlsY, 0, 1023, 0, 60);
+    payload.elevator = controlsY;
     controlsX = analogRead(controlsJoyPinX);  
-    controlsX = map(controlsX, 0, 1023, 110, 70);
-    myPayload.aileron = controlsX;
+    controlsX = map(controlsX, 0, 1023, 0, 60);
+    payload.aileron = controlsX;
+    payload.rudder = controlsX;
 
-    radio.write(&myPayload, sizeof(myPayload)); 
+    radio.write(&payload, sizeof(payload)); 
 
     //Printing data
-    Serial.print("Data thrust:"); 
-    Serial.print(myPayload.thrust); 
     Serial.print(" Data Elevator:"); 
-    Serial.print(myPayload.elevator); 
+    Serial.print(payload.elevator); 
+    Serial.print(" Data Rudder:"); 
+    Serial.println(payload.rudder); 
     Serial.print(" Data Aileron:"); 
-    Serial.println(myPayload.aileron); 
+    Serial.println(payload.aileron); 
+    Serial.print("Data thrust:"); 
+    Serial.print(payload.thrust); 
     
     delay(20); 
 }
