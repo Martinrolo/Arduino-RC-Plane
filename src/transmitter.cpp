@@ -41,10 +41,10 @@ void loop() {
 
     //Get controls data from left joystick
     controlsY = analogRead(controlsJoyPinY);  
-    controlsY = map(controlsY, 0, 1023, 0, 60);
+    controlsY = map(controlsY, 0, 1023, 120, 0);
     payload.elevator = controlsY;
     controlsX = analogRead(controlsJoyPinX);  
-    controlsX = map(controlsX, 0, 1023, 0, 60);
+    controlsX = map(controlsX, 0, 1023, 0, 120);
     payload.aileron = controlsX;
     payload.rudder = controlsX;
 

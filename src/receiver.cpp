@@ -69,7 +69,7 @@ void receiveData()
         radio.read(&tempPayload, sizeof(tempPayload)); 
 
         //check if aileron data makes sense
-        if (tempPayload.aileron >= 70 && tempPayload.aileron <= 110) {
+        if (tempPayload.aileron >= 0 && tempPayload.aileron <= 120) {
             payload = tempPayload;
             lastTransmissionTime = millis();
 
@@ -103,10 +103,10 @@ void lostTransmissionHandler()
 {
     Serial.println("LOST TRANSMISSION"); 
     
-    payload.elevator = 30;
-    payload.aileron = 30;
-    payload.rudder = 30;
+    payload.elevator = 60;
+    payload.aileron = 60;
+    payload.rudder = 60;
     payload.thrust = 0;
-
+                                  
     writeData();
 }
