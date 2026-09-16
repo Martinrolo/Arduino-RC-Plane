@@ -37,6 +37,8 @@ void setup() {
     channel_4.attach(5);
     channel_5.attach(6, 1000, 2000);
     channel_5.write(0);
+    resetData();       
+
 
     radio.begin(); 
     radio.setAutoAck(false); 
@@ -73,21 +75,35 @@ void receiveData()
             payload = tempPayload;
             lastTransmissionTime = millis();
 
+            int16_t elevatorRead = channel_1.read();
+            int16_t rudderRead = channel_2.read();
+            int16_t aileronRead = channel_3.read();
+            int16_t thrustRead = channel_5.read();
+
+            payload.elevator = setNextServoValue(tempPayload.elevator, elevatorRead, 2);
+            payload.rudder = setNextServoValue(tempPayload.rudder, rudderRead, 2);
+            payload.aileron = setNextServoValue(tempPayload.aileron, aileronRead, 2);
+            payload.thrust = setNextServoValue(tempPayload.thrust, thrustRead, 10);
+
             Serial.print("AILERON:"); 
-            Serial.print(tempPayload.aileron); 
-
+            Serial.print(payload.aileron); 
             Serial.print(" RUDDER:"); 
-            Serial.print(tempPayload.rudder); 
-
+            Serial.print(payload.rudder); 
             Serial.print(" ELEVATOR:"); 
-            Serial.print(tempPayload.elevator); 
-
+            Serial.print(payload.elevator); 
             Serial.print(" THRUST:"); 
-            Serial.println(tempPayload.thrust); 
+            Serial.println(payload.thrust); 
         }
 
         readCount++;
     }
+}
+
+uint8_t setNextServoValue(uint8_t target, uint8_t current, int16_t step)
+{
+    if(target > current) return current + step;
+    if(target < current) return current - step;
+    return current;
 }
 
 void writeData()
@@ -102,11 +118,14 @@ void writeData()
 void lostTransmissionHandler()
 {
     Serial.println("LOST TRANSMISSION"); 
-    
+    resetData();       
+    writeData();
+}
+
+void resetData()
+{
     payload.elevator = 60;
     payload.aileron = 60;
     payload.rudder = 60;
     payload.thrust = 0;
-                                  
-    writeData();
 }
