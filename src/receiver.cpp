@@ -80,9 +80,9 @@ void receiveData()
             int16_t aileronRead = channel_3.read();
             int16_t thrustRead = channel_5.read();
 
-            payload.elevator = setNextServoValue(tempPayload.elevator, elevatorRead, 2);
-            payload.rudder = setNextServoValue(tempPayload.rudder, rudderRead, 2);
-            payload.aileron = setNextServoValue(tempPayload.aileron, aileronRead, 2);
+            payload.elevator = setNextServoValue(tempPayload.elevator, elevatorRead, 4);
+            payload.rudder = setNextServoValue(tempPayload.rudder, rudderRead, 4);
+            payload.aileron = setNextServoValue(tempPayload.aileron, aileronRead, 4);
             payload.thrust = setNextServoValue(tempPayload.thrust, thrustRead, 10);
 
             Serial.print("AILERON:"); 
@@ -99,10 +99,17 @@ void receiveData()
     }
 }
 
-uint8_t setNextServoValue(uint8_t target, uint8_t current, int16_t step)
+int16_t setNextServoValue(int16_t target, int16_t current, int16_t step)
 {
+    if(abs(target - current) < step) 
+    {
+        return target; //If the difference is less than the step, just put the difference
+    }
+
+
     if(target > current) return current + step;
     if(target < current) return current - step;
+
     return current;
 }
 

@@ -20,6 +20,7 @@ int controlsJoyPinY = A2;
 int controlsJoyPinX = A3;
 int controlsY = 0;                  
 int controlsX = 0;
+int controlsRudder = 0;
 
 void setup() {
     Serial.begin(115200);
@@ -42,11 +43,13 @@ void loop() {
     //Get controls data from left joystick
     controlsY = analogRead(controlsJoyPinY);  
     controlsY = map(controlsY, 0, 1023, 120, 0);
-    payload.elevator = controlsY;
     controlsX = analogRead(controlsJoyPinX);  
-    controlsX = map(controlsX, 0, 1023, 0, 120);
+    controlsX = map(controlsX, 0, 1023, 120, 0);
+    controlsRudder = analogRead(controlsJoyPinX);  
+    controlsRudder = map(controlsRudder, 0, 1023, 20, 100);
+    payload.elevator = controlsY;
     payload.aileron = controlsX;
-    payload.rudder = controlsX;
+    payload.rudder = controlsRudder;
 
     radio.write(&payload, sizeof(payload)); 
 
